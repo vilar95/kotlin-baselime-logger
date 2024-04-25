@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace = "com.github.lucasaguiar11.kotlin_baselime_logger"
-    compileSdk = 34
+    compileSdk = 33
 
     defaultConfig {
         applicationId = "com.github.lucasaguiar11.kotlin_baselime_logger"
         minSdk = 23
-        targetSdk = 34
+        targetSdk = 33
         versionCode = 1
         versionName = "1.0"
 
