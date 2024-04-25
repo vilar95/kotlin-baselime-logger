@@ -18,6 +18,12 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        buildConfigField("String", "BASE_URL", "\"https://events.baselime.io\"")
+        buildConfigField("String", "API_KEY", "\"751ddf4e1b9e4c8c1042ded93f71aea9a790201f\"")
+        buildConfigField("String", "SERVICE_NAME", "\"Kotlin Baselime Logger\"")
+        buildConfigField("String", "BUILD_TYPE", "\"dev\"")
+
     }
 
     buildTypes {
@@ -38,6 +44,8 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
+
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
@@ -66,4 +74,7 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+//    implementation(libs.kotlin.baselime.logger)
+    implementation(project(":kotlin-baselime-logger"))
 }

@@ -14,6 +14,46 @@ import com.github.lucasaguiar11.kotlin_baselime_logger.ui.theme.Kotlinbaselimelo
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        BaselimeConfig.new(
+            baseUrl = BuildConfig.BASE_URL,
+            apiKey = BuildConfig.API_KEY,
+            serviceName = "kotlin-baselime-logger-sample",
+            defaultData = mapOf(
+                "app_version" to BuildConfig.VERSION_NAME,
+                "build_type" to BuildConfig.BUILD_TYPE,
+                "serial_number" to "SN1234567"
+            ),
+            isDebug = true
+        )
+
+
+        Logger.i("MainActivity", "onCreate")
+        Logger.i(
+            "MainActivity",
+            "onCreate",
+            mapOf("timestamp" to System.currentTimeMillis().toString())
+        )
+
+        try {
+            throw Exception("This is a test exception")
+        } catch (e: Exception) {
+            Logger.e(
+                "MainActivity",
+                "onCreate with exception",
+                throwable = e
+            )
+        }
+
+        Logger.d("MainActivity", "onCreate", mapOf("duration" to "1000"))
+        Logger.w("MainActivity", "onCreate", mapOf("duration" to "2000"))
+
+
+        for (i in 1..50) {
+            Logger.i("MainActivity - LOOP", "i => $i", mapOf("iteration" to i.toString()))
+            Thread.sleep(10)
+        }
+
         super.onCreate(savedInstanceState)
         setContent {
             KotlinbaselimeloggerTheme {
