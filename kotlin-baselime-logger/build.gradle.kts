@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.github.lucasaguiar11.kotlin_baselime_logger"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         minSdk = 23

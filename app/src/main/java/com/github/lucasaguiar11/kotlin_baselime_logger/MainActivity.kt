@@ -24,7 +24,8 @@ class MainActivity : ComponentActivity() {
             defaultData = mapOf(
                 "app_version" to BuildConfig.VERSION_NAME,
                 "build_type" to BuildConfig.BUILD_TYPE,
-                "serial_number" to "SN1234567"
+                "serial_number" to "SN1234567",
+                "value" to 100
             ),
             isDebug = true
         )
@@ -48,7 +49,7 @@ class MainActivity : ComponentActivity() {
             )
         }
 
-        Logger.d("MainActivity", "onCreate", mapOf("duration" to "1000"))
+        Logger.d("MainActivity", "onCreate", mapOf("duration" to 1000))
         Logger.w("MainActivity", "onCreate", mapOf("duration" to "2000"))
 
 

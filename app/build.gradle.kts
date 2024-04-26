@@ -20,7 +20,7 @@ android {
         }
 
         buildConfigField("String", "BASE_URL", "\"https://events.baselime.io\"")
-        buildConfigField("String", "API_KEY", "\"751ddf4e1b9e4c8c1042ded93f71aea9a790201f\"") // This is a fake key hehehe
+        buildConfigField("String", "API_KEY", "\"811a26cb3387e1c47b85a5f4950ed7c6ddfb7e44\"") // This is a fake key hehehe
         buildConfigField("String", "SERVICE_NAME", "\"Kotlin Baselime Logger\"")
         buildConfigField("String", "BUILD_TYPE", "\"dev\"")
 

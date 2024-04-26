@@ -5,7 +5,7 @@ object BaselimeConfig {
     private var apiKey = ""
     private var serviceName = "Kotlin Baselime Logger"
     private var dataSet = "logs"
-    private var defaultData: Map<String, String>? = null
+    private var defaultData: Map<String, Any>? = null
     private var isDebug = false
     private var batchQueueSize = 10
     private var timeDelay = 5000L // 5 seconds
@@ -16,7 +16,7 @@ object BaselimeConfig {
         apiKey: String? = null,
         serviceName: String? = null,
         dataSet: String? = null,
-        defaultData: Map<String, String>? = null,
+        defaultData: Map<String, Any>? = null,
         isDebug: Boolean? = null,
         batchQueueSize: Int? = null,
         timeDelay: Long? = null
@@ -72,7 +72,7 @@ object BaselimeConfig {
         return dataSet
     }
 
-    fun getDefaultData(): Map<String, String>? {
+    fun getDefaultData(): Map<String, Any>? {
         return defaultData
     }
 

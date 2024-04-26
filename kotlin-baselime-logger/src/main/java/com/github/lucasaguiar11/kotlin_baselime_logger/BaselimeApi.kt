@@ -1,6 +1,5 @@
 package com.github.lucasaguiar11.kotlin_baselime_logger
 
-import com.github.lucasaguiar11.kotlinBaselimeLogger.LoggerLevel
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -52,7 +51,7 @@ internal data class LogEvent(
     val message: String,
     val error: String? = null,
     val namespace: String? = null,
-    val data: Map<String, String>? = null,
+    val data: Map<String, Any>? = null,
     val duration: Long? = null,
     val timestamp: Long = System.currentTimeMillis()
 )

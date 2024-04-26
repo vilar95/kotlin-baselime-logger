@@ -1,7 +1,6 @@
 package com.github.lucasaguiar11.kotlin_baselime_logger
 
 import android.util.Log
-import com.github.lucasaguiar11.kotlinBaselimeLogger.LoggerLevel
 import com.github.lucasaguiar11.kotlin_baselime_logger.LoggerUtil.toMap
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
@@ -90,7 +89,7 @@ object Logger {
 
     private fun makeEvent(
         level: LoggerLevel,
-        data: Map<String, String>?,
+        data: Map<String, Any>?,
         message: String,
         tag: String,
         duration: Long?,
@@ -119,7 +118,7 @@ object Logger {
     fun i(
         tag: String,
         message: String,
-        data: Map<String, String>? = null,
+        data: Map<String, Any>? = null,
         duration: Long? = null,
         obj: Any? = null
     ) {
@@ -132,7 +131,7 @@ object Logger {
     fun e(
         tag: String,
         message: String,
-        data: Map<String, String>? = null,
+        data: Map<String, Any>? = null,
         duration: Long? = null,
         throwable: Throwable? = null,
         obj: Any? = null
@@ -146,7 +145,7 @@ object Logger {
     fun d(
         tag: String,
         message: String,
-        data: Map<String, String>? = null,
+        data: Map<String, Any>? = null,
         duration: Long? = null,
         obj: Any? = null
     ) {
@@ -159,7 +158,7 @@ object Logger {
     fun w(
         tag: String,
         message: String,
-        data: Map<String, String>? = null,
+        data: Map<String, Any>? = null,
         duration: Long? = null,
         obj: Any? = null
     ) {

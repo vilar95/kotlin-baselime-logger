@@ -44,10 +44,10 @@ object LoggerUtil {
         }
     }
 
-    fun Any.toMap(): Map<String, String> {
+    fun Any.toMap(): Map<String, Any> {
         return this::class.java.declaredFields.associate { field ->
             field.isAccessible = true
-            field.name to (field.get(this)?.toString() ?: "null")
+            field.name to (field.get(this) ?: "null")
         }
     }
 }
