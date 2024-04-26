@@ -99,14 +99,12 @@ object Logger {
     ): LogEvent {
         LoggerUtil.debug("makeEvent: $level - $message")
 
-        val innerData =
+        var innerData =
             data?.let { BaselimeConfig.getDefaultData()?.plus(it) }
                 ?: BaselimeConfig.getDefaultData()
 
-        val map = obj?.toMap()
-        if (map != null) {
-            innerData?.plus(map)
-        }
+        val map = obj?.toMap() ?: emptyMap()
+        innerData = innerData?.plus(map) ?: map
 
         return LogEvent(
             level = level,
