@@ -2,6 +2,7 @@ package com.github.lucasaguiar11.kotlin_baselime_logger
 
 import android.util.Log
 import com.github.lucasaguiar11.kotlinBaselimeLogger.LoggerLevel
+import com.github.lucasaguiar11.kotlin_baselime_logger.LoggerUtil.toMap
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
@@ -93,12 +94,19 @@ object Logger {
         message: String,
         tag: String,
         duration: Long?,
-        throwable: Throwable? = null
+        throwable: Throwable? = null,
+        obj: Any? = null
     ): LogEvent {
         LoggerUtil.debug("makeEvent: $level - $message")
+
         val innerData =
             data?.let { BaselimeConfig.getDefaultData()?.plus(it) }
                 ?: BaselimeConfig.getDefaultData()
+
+        val map = obj?.toMap()
+        if (map != null) {
+            innerData?.plus(map)
+        }
 
         return LogEvent(
             level = level,
@@ -115,9 +123,10 @@ object Logger {
         message: String,
         data: Map<String, String>? = null,
         duration: Long? = null,
+        obj: Any? = null
     ) {
         LoggerUtil.debug("i: $tag - $message")
-        val event = makeEvent(LoggerLevel.INFO, data, message, tag, duration)
+        val event = makeEvent(LoggerLevel.INFO, data, message, tag, duration, obj = obj)
         addEventToQueue(event)
         Log.i(tag, message)
     }
@@ -127,10 +136,11 @@ object Logger {
         message: String,
         data: Map<String, String>? = null,
         duration: Long? = null,
-        throwable: Throwable? = null
+        throwable: Throwable? = null,
+        obj: Any? = null
     ) {
         LoggerUtil.debug("e: $tag - $message")
-        val event = makeEvent(LoggerLevel.ERROR, data, message, tag, duration, throwable)
+        val event = makeEvent(LoggerLevel.ERROR, data, message, tag, duration, throwable, obj)
         addEventToQueue(event)
         Log.e(tag, message, throwable)
     }
@@ -140,9 +150,10 @@ object Logger {
         message: String,
         data: Map<String, String>? = null,
         duration: Long? = null,
+        obj: Any? = null
     ) {
         LoggerUtil.debug("d: $tag - $message")
-        val event = makeEvent(LoggerLevel.DEBUG, data, message, tag, duration)
+        val event = makeEvent(LoggerLevel.DEBUG, data, message, tag, duration, obj = obj)
         addEventToQueue(event)
         Log.d(tag, message)
     }
@@ -152,9 +163,10 @@ object Logger {
         message: String,
         data: Map<String, String>? = null,
         duration: Long? = null,
+        obj: Any? = null
     ) {
         LoggerUtil.debug("w: $tag - $message")
-        val event = makeEvent(LoggerLevel.WARN, data, message, tag, duration)
+        val event = makeEvent(LoggerLevel.WARN, data, message, tag, duration, obj = obj)
         addEventToQueue(event)
         Log.w(tag, message)
     }

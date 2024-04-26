@@ -43,4 +43,11 @@ object LoggerUtil {
             Log.d("[DEBUG-KBS]", message)
         }
     }
+
+    fun Any.toMap(): Map<String, String> {
+        return this::class.java.declaredFields.associate { field ->
+            field.isAccessible = true
+            field.name to (field.get(this)?.toString() ?: "null")
+        }
+    }
 }

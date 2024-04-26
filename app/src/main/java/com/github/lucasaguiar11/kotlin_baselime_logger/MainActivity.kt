@@ -12,6 +12,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.github.lucasaguiar11.kotlin_baselime_logger.ui.theme.KotlinbaselimeloggerTheme
 
+data class User(val name: String, val age: Int)
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -27,8 +29,9 @@ class MainActivity : ComponentActivity() {
             isDebug = true
         )
 
+        val user = User("Lucas", 30)
+        Logger.i("MainActivity", "onCreate", obj = user)
 
-        Logger.i("MainActivity", "onCreate")
         Logger.i(
             "MainActivity",
             "onCreate",
