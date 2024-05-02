@@ -53,6 +53,6 @@ internal data class LogEvent(
     val namespace: String? = null,
     val data: Map<String, Any>? = null,
     val duration: Long? = null,
-    val timestamp: Long = System.currentTimeMillis()
+    val timestamp: Long = System.currentTimeMillis(),
 )
 

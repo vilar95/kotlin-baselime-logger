@@ -11,7 +11,6 @@ import java.util.TimerTask
 
 object Logger {
 
-
     private val logQueue = PriorityQueue<LogEvent>(1, compareBy {
         it.timestamp
     })
@@ -26,32 +25,13 @@ object Logger {
     init {
         LoggerUtil.debug("Logger: init (timer = $timerCreated)")
         if (!timerCreated) {
-            Timer().scheduleAtFixedRate(object : TimerTask() {
+            Timer().schedule(object : TimerTask() {
                 override fun run() {
                     LoggerUtil.debug("TimerTask: processLogQueue")
                     processUniqueLogQueue()
                 }
             }, 0, BaselimeConfig.getTimeDelay())
             timerCreated = true
-        }
-
-    }
-
-    private fun processLogQueue() {
-        while (logQueue.isNotEmpty() && batchQueue.size < BaselimeConfig.getBatchQueueSize()) {
-            LoggerUtil.debug("processLogQueue: logQueue.size = ${logQueue.size} - batchQueue.size = ${batchQueue.size}")
-            val logEvent = logQueue.poll()
-            if (logEvent == null) {
-                LoggerUtil.debug("processLogQueue: poll: logEvent is null")
-                break
-            }
-
-            LoggerUtil.debug("processLogQueue: poll: $logEvent")
-            batchQueue.add(logEvent)
-        }
-
-        if (batchQueue.size >= BaselimeConfig.getBatchQueueSize()) {
-            sendLogsAsync()
         }
 
     }
@@ -71,6 +51,18 @@ object Logger {
     }
 
     private fun processUniqueLogQueue() {
+        while (logQueue.isNotEmpty() && batchQueue.size < BaselimeConfig.getBatchQueueSize()) {
+            LoggerUtil.debug("processLogQueue: logQueue.size = ${logQueue.size} - batchQueue.size = ${batchQueue.size}")
+            val logEvent = logQueue.poll()
+            if (logEvent == null) {
+                LoggerUtil.debug("processLogQueue: poll: logEvent is null")
+                break
+            }
+
+            LoggerUtil.debug("processLogQueue: poll: $logEvent")
+            batchQueue.add(logEvent)
+        }
+
         if (batchQueue.isNotEmpty()) {
             LoggerUtil.debug("processUniqueLogQueue: batchQueue.size = ${batchQueue.size}")
             sendLogsAsync()
@@ -81,7 +73,6 @@ object Logger {
         try {
             LoggerUtil.debug("sendLogsAsync: $logs")
             logQueue.add(logs)
-            processLogQueue()
         } catch (e: InterruptedException) {
             println("Error adding log to queue: ${e.message}")
         }
@@ -111,7 +102,7 @@ object Logger {
             namespace = tag,
             data = innerData,
             duration = duration,
-            error = LoggerUtil.getError(throwable)
+            error = LoggerUtil.getError(throwable),
         )
     }
 

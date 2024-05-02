@@ -10,7 +10,6 @@ object BaselimeConfig {
     private var batchQueueSize = 10
     private var timeDelay = 5000L // 5 seconds
 
-
     fun new(
         baseUrl: String? = null,
         apiKey: String? = null,
@@ -87,5 +86,4 @@ object BaselimeConfig {
     fun getTimeDelay(): Long {
         return timeDelay
     }
-
 }
