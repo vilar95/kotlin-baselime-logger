@@ -35,6 +35,8 @@ object LoggerUtil {
             sb.append(throwable.message)
         }
 
+        sb.append(throwable.stackTraceToString())
+
         return sb.toString()
     }
 
