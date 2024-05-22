@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.github.lucasaguiar11.kotlin_baselime_logger.ui.theme.KotlinbaselimeloggerTheme
+import java.util.UUID
 
 data class User(val name: String, val age: Int)
 
@@ -57,6 +58,22 @@ class MainActivity : ComponentActivity() {
             Logger.i("MainActivity - LOOP", "i => $i", mapOf("iteration" to i.toString()))
             Thread.sleep(10)
         }
+
+        val requestId = UUID.randomUUID().toString()
+        Logger.i(
+            "TestRequestID", "Request XYZ", mapOf("teste" to "123"), requestId = requestId
+        )
+        Logger.i(
+            "TestRequestID", "Request XYZ 1", mapOf("teste" to "123"), requestId = requestId
+        )
+        Logger.i(
+            "TestRequestID", "Request XYZ 2", mapOf("teste" to "123") // ignore
+        )
+
+        Logger.i(
+            "TestRequestID", "Request XYZ 3", mapOf("teste" to "123"), requestId = requestId
+        )
+
 
         super.onCreate(savedInstanceState)
         setContent {

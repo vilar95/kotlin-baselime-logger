@@ -85,7 +85,8 @@ object Logger {
         tag: String,
         duration: Long?,
         throwable: Throwable? = null,
-        obj: Any? = null
+        obj: Any? = null,
+        requestId: String? = null
     ): LogEvent {
         LoggerUtil.debug("makeEvent: $level - $message")
 
@@ -103,6 +104,7 @@ object Logger {
             data = innerData,
             duration = duration,
             error = LoggerUtil.getError(throwable),
+            requestId = requestId
         )
     }
 
@@ -111,10 +113,19 @@ object Logger {
         message: String,
         data: Map<String, Any>? = null,
         duration: Long? = null,
-        obj: Any? = null
+        obj: Any? = null,
+        requestId: String? = null
     ) {
         LoggerUtil.debug("i: $tag - $message")
-        val event = makeEvent(LoggerLevel.INFO, data, message, tag, duration, obj = obj)
+        val event = makeEvent(
+            LoggerLevel.INFO,
+            data,
+            message,
+            tag,
+            duration,
+            obj = obj,
+            requestId = requestId
+        )
         addEventToQueue(event)
         Log.i(tag, message)
     }
@@ -125,10 +136,20 @@ object Logger {
         data: Map<String, Any>? = null,
         duration: Long? = null,
         throwable: Throwable? = null,
-        obj: Any? = null
+        obj: Any? = null,
+        requestId: String? = null
     ) {
         LoggerUtil.debug("e: $tag - $message")
-        val event = makeEvent(LoggerLevel.ERROR, data, message, tag, duration, throwable, obj)
+        val event = makeEvent(
+            LoggerLevel.ERROR,
+            data,
+            message,
+            tag,
+            duration,
+            throwable,
+            obj,
+            requestId = requestId
+        )
         addEventToQueue(event)
         Log.e(tag, message, throwable)
     }
@@ -138,10 +159,19 @@ object Logger {
         message: String,
         data: Map<String, Any>? = null,
         duration: Long? = null,
-        obj: Any? = null
+        obj: Any? = null,
+        requestId: String? = null
     ) {
         LoggerUtil.debug("d: $tag - $message")
-        val event = makeEvent(LoggerLevel.DEBUG, data, message, tag, duration, obj = obj)
+        val event = makeEvent(
+            LoggerLevel.DEBUG,
+            data,
+            message,
+            tag,
+            duration,
+            obj = obj,
+            requestId = requestId
+        )
         addEventToQueue(event)
         Log.d(tag, message)
     }
@@ -151,10 +181,19 @@ object Logger {
         message: String,
         data: Map<String, Any>? = null,
         duration: Long? = null,
-        obj: Any? = null
+        obj: Any? = null,
+        requestId: String? = null
     ) {
         LoggerUtil.debug("w: $tag - $message")
-        val event = makeEvent(LoggerLevel.WARN, data, message, tag, duration, obj = obj)
+        val event = makeEvent(
+            LoggerLevel.WARN,
+            data,
+            message,
+            tag,
+            duration,
+            obj = obj,
+            requestId = requestId
+        )
         addEventToQueue(event)
         Log.w(tag, message)
     }
