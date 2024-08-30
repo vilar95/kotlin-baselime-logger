@@ -1,5 +1,6 @@
 package com.github.lucasaguiar11.kotlin_baselime_logger
 
+import android.util.Log
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -21,18 +22,25 @@ internal class BaselimeApi() {
     private val logApi: LogApi by lazy { retrofit.create(LogApi::class.java) }
 
     suspend fun sendLogs(logs: List<LogEvent>) {
-        LoggerUtil.debug("qtd: ${logs.count()} logs")
-        LoggerUtil.debug("logs: $logs")
-        val response = logApi.sendLogs(
-            BaselimeConfig.getDataSet(),
-            BaselimeConfig.getApiKey(),
-            BaselimeConfig.getServiceName(),
-            logs
-        )
-        LoggerUtil.debug("response logs: response = $response")
-        if (!response.isSuccessful) {
-            println("Failed to send logs: ${response.code()}")
+        try {
+            LoggerUtil.debug("qtd: ${logs.count()} logs")
+            LoggerUtil.debug("logs: $logs")
+            val response = logApi.sendLogs(
+                BaselimeConfig.getDataSet(),
+                BaselimeConfig.getApiKey(),
+                BaselimeConfig.getServiceName(),
+                logs
+            )
+            LoggerUtil.debug("response logs: response = $response")
+            if (!response.isSuccessful) {
+                println("Failed to send logs: ${response.code()}")
+            }
+        } catch (e: Exception) {
+            Log.e("BaselimeApi", "Error sending logs (message): ${e.message}")
+            Log.e("BaselimeApi", "Error sending logs (stackTrace): ${e.stackTraceToString()}")
+            Log.e("BaselimeApi", "Error sending logs (cause): ${e.cause}")
         }
+
     }
 
     interface LogApi {
