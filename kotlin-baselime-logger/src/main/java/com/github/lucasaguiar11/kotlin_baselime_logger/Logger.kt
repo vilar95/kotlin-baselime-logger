@@ -45,27 +45,34 @@ object Logger {
                 logService.sendLogs(toSend)
             } catch (e: Exception) {
                 println("Error sending logs: ${e.message}")
+                LoggerUtil.debug("Error sending logs: ${e.message}")
             }
         }
         batchQueue.clear()
     }
 
     private fun processUniqueLogQueue() {
-        while (logQueue.isNotEmpty() && batchQueue.size < BaselimeConfig.getBatchQueueSize()) {
-            LoggerUtil.debug("processLogQueue: logQueue.size = ${logQueue.size} - batchQueue.size = ${batchQueue.size}")
-            val logEvent = logQueue.poll()
-            if (logEvent == null) {
-                LoggerUtil.debug("processLogQueue: poll: logEvent is null")
-                break
+
+        try {
+            while (logQueue.isNotEmpty() && batchQueue.size < BaselimeConfig.getBatchQueueSize()) {
+                LoggerUtil.debug("processLogQueue: logQueue.size = ${logQueue.size} - batchQueue.size = ${batchQueue.size}")
+                val logEvent = logQueue.poll()
+                if (logEvent == null) {
+                    LoggerUtil.debug("processLogQueue: poll: logEvent is null")
+                    break
+                }
+
+                LoggerUtil.debug("processLogQueue: poll: $logEvent")
+                batchQueue.add(logEvent)
             }
 
-            LoggerUtil.debug("processLogQueue: poll: $logEvent")
-            batchQueue.add(logEvent)
-        }
-
-        if (batchQueue.isNotEmpty()) {
-            LoggerUtil.debug("processUniqueLogQueue: batchQueue.size = ${batchQueue.size}")
-            sendLogsAsync()
+            if (batchQueue.isNotEmpty()) {
+                LoggerUtil.debug("processUniqueLogQueue: batchQueue.size = ${batchQueue.size}")
+                sendLogsAsync()
+            }
+        } catch (e: Exception) {
+            println("Error processing log queue: ${e.message}")
+            LoggerUtil.debug("Error processing log queue: ${e.message}")
         }
     }
 

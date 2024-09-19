@@ -63,5 +63,9 @@ internal data class LogEvent(
     val duration: Long? = null,
     val requestId: String? = null,
     val timestamp: Long = System.currentTimeMillis(),
-)
+) {
+    init {
+        LoggerUtil.debug("LogEvent created with timestamp: $timestamp")
+    }
+}
 
