@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId = "com.github.lucasaguiar11.kotlin_baselime_logger"
-        minSdk = 23
+        minSdk = 22
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
